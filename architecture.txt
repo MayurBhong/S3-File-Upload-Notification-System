@@ -1,0 +1,120 @@
+Architecture Overview
+
+S3 File Upload Notification System
+
+This project implements an event driven AWS architecture that automatically sends notifications when a file is uploaded to an Amazon S3 bucket. The design uses serverless services to ensure scalability, reliability, and minimal operational overhead.
+
+
+Architecture Components
+
+Amazon S3
+Amazon S3 is used as the storage layer for uploaded files.
+Users upload objects such as documents, images, or logs into a designated S3 bucket.
+The bucket is configured to generate event notifications for object creation events.
+
+Role in architecture
+Stores uploaded files
+Acts as the event source
+Triggers downstream processing
+
+
+S3 Event Notification
+The S3 bucket is configured with an event notification rule.
+The rule listens for ObjectCreated events such as PutObject or CompleteMultipartUpload.
+When a new file is uploaded, S3 automatically sends an event to AWS Lambda.
+
+Role in architecture
+Detects file upload events
+Initiates the serverless workflow
+Eliminates the need for manual polling
+
+
+AWS Lambda
+AWS Lambda is used to process S3 events without provisioning servers.
+The Lambda function is triggered automatically by S3 events.
+It extracts metadata such as bucket name and object key from the event payload.
+
+Role in architecture
+Processes S3 event data
+Extracts file metadata
+Formats notification messages
+Acts as the core business logic layer
+
+Lambda behavior
+Validates incoming event structure
+Handles only S3 event sources
+Logs execution details to CloudWatch
+
+
+Amazon SNS
+Amazon Simple Notification Service is used to send email notifications.
+The Lambda function publishes messages to an SNS topic.
+SNS delivers the notification to subscribed email endpoints.
+
+Role in architecture
+Decouples notification logic from processing logic
+Sends real time alerts
+Supports multiple subscribers
+
+
+Amazon CloudWatch
+Amazon CloudWatch is used for logging and monitoring.
+Lambda automatically writes execution logs to CloudWatch Log Groups.
+These logs help with debugging, auditing, and operational visibility.
+
+Role in architecture
+Stores Lambda execution logs
+Tracks invocation success and failures
+Assists in troubleshooting issues
+
+
+Architecture Flow
+
+User uploads a file to the S3 bucket
+S3 detects the object creation event
+S3 triggers the Lambda function
+Lambda processes the event and extracts file details
+Lambda publishes a message to the SNS topic
+SNS sends an email notification to subscribed users
+CloudWatch logs the Lambda execution
+
+
+Security Design
+
+IAM Role is attached to Lambda with least privilege access
+Lambda role permissions include
+Read access to S3 event metadata
+Publish permission to SNS topic
+Write access to CloudWatch Logs
+Public access to S3 bucket is not required
+
+
+Scalability and Reliability
+
+Architecture is fully serverless
+Automatically scales with number of file uploads
+No servers to manage or maintain
+High availability ensured by AWS managed services
+
+
+Cost Optimization
+Lambda runs only on events
+SNS charges only per notification
+S3 event notifications are free
+CloudWatch logs kept minimal
+Suitable for AWS Free Trial usage
+
+
+Use Cases
+
+File upload alerting system
+Audit trail for S3 uploads
+Monitoring data ingestion pipelines
+Notification system for DevOps workflows
+
+
+Design Summary
+
+This architecture demonstrates a clean event driven pattern using AWS managed services.
+It highlights serverless design, loose coupling, scalability, and automation.
+The system is simple, efficient, and suitable for beginner to intermediate AWS and DevOps portfolios.
