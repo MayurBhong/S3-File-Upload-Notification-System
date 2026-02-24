@@ -135,14 +135,6 @@ You should receive an email containing the bucket name and uploaded file name.
 Purpose  
 CloudWatch logs confirm that Lambda executed successfully and help with debugging if errors occur.
 
----
-## 🏗️ Architecture Flow Summary
-- User uploads a file to Amazon S3  
-- S3 detects the object creation event  
-- S3 triggers the Lambda function  
-- Lambda extracts file metadata  
-- SNS sends an email notification  
-- CloudWatch logs Lambda execution  
 
 ---
 ## 🎯 Learning Outcomes
@@ -150,3 +142,4 @@ CloudWatch logs confirm that Lambda executed successfully and help with debuggin
 - Implemented serverless automation with AWS Lambda  
 - Integrated Amazon S3, Lambda, SNS, and CloudWatch using event triggers  
 - Gained hands on experience with AWS monitoring and logging
+
