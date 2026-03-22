@@ -137,6 +137,46 @@ CloudWatch logs confirm that Lambda executed successfully and help with debuggin
 
 
 ---
+
+
+## ⚠️ Challenges Faced and Solutions
+
+### 1. S3 Event Not Triggering Lambda  
+**Challenge**  
+File upload did not trigger the Lambda function.  
+
+**Solution**  
+- Verified S3 event notification configuration  
+- Selected **All object create events**  
+- Ensured correct Lambda function was attached  
+- Checked both services were in the same region  
+
+
+### 2. Email Notifications Not Received  
+**Challenge**  
+No email was received after file upload.  
+
+**Solution**  
+- Confirmed email subscription from inbox  
+- Checked SNS topic ARN in Lambda code  
+- Tested SNS manually to verify delivery  
+- Ensured Lambda had SNS publish permission  
+
+
+### 3. Lambda Permission Errors  
+**Challenge**  
+Lambda failed with access denied error.  
+
+**Solution**  
+- Attached correct IAM policies  
+  - AmazonS3ReadOnlyAccess  
+  - AmazonSNSFullAccess  
+  - CloudWatchLogsFullAccess  
+- Verified role was linked to Lambda  
+
+---
+
+
 ## 🎯 Learning Outcomes
 - Learned event driven architecture using AWS services  
 - Implemented serverless automation with AWS Lambda  
